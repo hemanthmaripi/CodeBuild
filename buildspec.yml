@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: 11
+    commands:
+      - echo Installing Maven...
+      - apt-get update && apt-get install -y maven
+  build:
+    commands:
+      - echo Building Java application...
+      - mvn package
+      - echo Building Docker image...
+      - docker build -t hello-world-app .
+      - echo Logging in to Docker Hub...
+      - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+      - docker tag hello-world-app $DOCKERHUB_USERNAME/hello-world-app:latest
+      - docker push $DOCKERHUB_USERNAME/hello-world-app:latest
+  post_build:
+    commands:
+      - echo Uploading JAR to S3...
+      - aws s3 cp target/hello-world-1.0.jar s3://hemanth-aws-bucket-hemanth/
+
