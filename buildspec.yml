@@ -6,7 +6,7 @@ phases:
       java: 11
     commands:
       - echo Installing Maven...
-      - apt-get update && apt-get install -y maven
+      - yum update && yum install -y maven
   build:
     commands:
       - echo Building Java application...
