@@ -1,12 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      java: 11
-    commands:
-      - echo Installing Maven...
-      - yum update && yum install -y maven
   build:
     commands:
       - echo Building Java application...
@@ -21,4 +15,3 @@ phases:
     commands:
       - echo Uploading JAR to S3...
       - aws s3 cp target/hello-world-1.0.jar s3://hemanth-aws-bucket-hemanth/
-
